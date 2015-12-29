@@ -1,11 +1,14 @@
-<head>
-  <title>main</title>
-</head>
+<template name="mainLayout">
+    <header><h1>bugblitz</h1></header>
+    <main>
+        {{>Template.dynamic template=content}}
+    </main>
+    <footer><a href="http://www.github.com/omegablitz/bugblitz">source</a></footer>
+</template>
 
-<body>
-  <h1>Welcome to Meteor!</h1>
-  {{> game}}
-</body>
+<template name="index">
+    Create game
+</template>
 
 <template name="game">
     <div id="board" style="width: 400px"></div>
