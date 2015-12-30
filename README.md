@@ -1,2 +1,2 @@
 # bugblitz
-Bughouse platform built on the Meteor framework
+Bughouse platform built on the Meteor framework.
