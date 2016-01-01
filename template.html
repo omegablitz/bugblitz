@@ -1,10 +1,16 @@
 <template name="mainLayout">
-    <head><link href="/favicon.ico" rel="icon" type="image/x-icon" /></head>
+    {{>head}}
     <header><h1>bugblitz</h1></header>
     <main>
         {{>Template.dynamic template=content}}
     </main>
     <footer><a href="http://www.github.com/omegablitz/bugblitz">source</a></footer>
+</template>
+
+<template name="head">
+    <head>
+        <link href="/favicon.ico" rel="icon" type="image/x-icon" />
+    </head>
 </template>
 
 <template name="index">
