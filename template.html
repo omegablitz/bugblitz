@@ -4,7 +4,7 @@
     <main>
         {{>Template.dynamic template=content}}
     </main>
-    <footer><a href="http://www.github.com/omegablitz/bugblitz">source</a></footer>
+    <!--<footer><a href="http://www.github.com/omegablitz/bugblitz">source</a></footer>-->
 </template>
 
 <template name="head">
@@ -18,8 +18,24 @@
 </template>
 
 <template name="game">
-    <div id="board" style="width: 400px"></div>
-    <p>Status: <span id="status"></span></p>
-    <p>FEN: <span id="fen"></span></p>
-    <p>PGN: <span id="pgn"></span></p>
+    <div id="game-container">
+        <div class="col">
+            <div id="board1" class="board"></div>
+        </div>
+        <div class="col">
+            <div id="board2" class="board"></div>
+        </div>
+    </div>
+    <!--<div id="status">-->
+        <!--<p>Status: {{STATUS}}</p>-->
+        <!--<p>PGN: {{PGN}}</p>-->
+    <!--</div>-->
+</template>
+
+<template name="invalid_game">
+    <p>Game doesn't exist</p>
+</template>
+
+<template name="loading">
+    <p>Loading....</p>
 </template>

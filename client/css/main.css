@@ -1,1 +1,52 @@
 /* CSS declarations go here */
+/*.spare-pieces-bottom-ae20f .spare-pieces-top-4028b [data-piece=wK] [data-piece=bK] {*/
+    /*display: none;*/
+/*}*/
+.col {
+    float: left;
+    padding: 40px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#game-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+
+.board {
+    width: 100%;
+}
+
+#board1 {
+    float: left;
+    /*padding: 20px;*/
+}
+
+#board2 {
+    float: left;
+    /*padding: 20px;*/
+}
+
+#status {
+    clear: both;
+}
+
+.piece-num {
+    z-index: 100;
+    position: absolute;
+    color: black;
+    font-size: 14px;
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    right: 1px;
+    bottom: -20px;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    cursor: default;
+}
+
+.spare-piece-container {
+    position: relative;
+}
