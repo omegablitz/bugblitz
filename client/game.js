@@ -163,11 +163,6 @@ Template.game.onRendered(function() {
     hidePieces(Template.instance());
 
     var instance = Template.instance();
-    //$(window).resize(function() {
-    //    board1.resize();
-    //    board2.resize();
-    //    hidePieces(instance);
-    //});
     var id;
     $(window).resize(function() {
         clearTimeout(id);
