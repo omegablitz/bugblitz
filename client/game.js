@@ -24,7 +24,7 @@ Template.game.created = function() {
             var b2 = Template.instance().board2.get();
             if(updGame.boards[1].fen() !== b2.fen())
                 b2.position(updGame.boards[1].fen());
-            hidePieces(Template.instance());
+            refresh(Template.instance());
         }
     });
 };
@@ -91,7 +91,7 @@ Template.game.onRendered(function() {
                 var old = temp.heldPieces.get()[boardNum];
                 old[piece.toLowerCase()]++;
                 //temp.heldPieces.set(old);
-                hidePieces(temp);
+                refresh(temp);
             }
         }
     };
@@ -120,7 +120,7 @@ Template.game.onRendered(function() {
             }
 
             if (move === null || move === false){
-                hidePieces(temp);
+                refresh(temp);
                 return 'snapback';
             }
             var newBPGN = temp.bpgn.get();
@@ -160,7 +160,7 @@ Template.game.onRendered(function() {
     var board2 = ChessBoard('board2', cfg(1));
     board2.flip();
     this.board2 = new ReactiveVar(board2);
-    hidePieces(Template.instance());
+    refresh(Template.instance());
 
     var instance = Template.instance();
     var id;
@@ -173,7 +173,7 @@ Template.game.onRendered(function() {
     function doneResizing(){
         board1.resize();
         board2.resize();
-        hidePieces(instance);
+        refresh(instance);
     }
 });
 
@@ -181,20 +181,20 @@ Template.game.onDestroyed(function() {
     $(window).off('resize');
 });
 
-function hidePieces(tempInstance) {
+function refresh(tempInstance) {
     $('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b').find('[data-piece=wK], [data-piece=bK]').css('visibility','hidden');
     var hide1 = "";
     var show1 = "";
-    for(var piece in tempInstance.game.get().pieces[0]) {
-        if(tempInstance.game.get().pieces[0].hasOwnProperty(piece) && tempInstance.game.get().pieces[0][piece] - tempInstance.heldPieces.get()[0][piece] === 0)
+    for(var piece in tempInstance.game.get().boards[0].pieces) {
+        if(tempInstance.game.get().boards[0].pieces.hasOwnProperty(piece) && tempInstance.game.get().boards[0].pieces[piece] - tempInstance.heldPieces.get()[0][piece] === 0)
             hide1 += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
         else
             show1 += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
     }
     var hide2 = "";
     var show2 = "";
-    for(piece in tempInstance.game.get().pieces[1]) {
-        if(tempInstance.game.get().pieces[1].hasOwnProperty(piece) && tempInstance.game.get().pieces[1][piece] - tempInstance.heldPieces.get()[1][piece] === 0)
+    for(piece in tempInstance.game.get().boards[1].pieces) {
+        if(tempInstance.game.get().boards[1].pieces.hasOwnProperty(piece) && tempInstance.game.get().boards[1].pieces[piece] - tempInstance.heldPieces.get()[1][piece] === 0)
             hide2 += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
         else
             show2 += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
@@ -210,7 +210,7 @@ function hidePieces(tempInstance) {
     b1Pieces.css('visibility','visible');
     b1Pieces.filter(function() {return $(this).parents('.spare-piece-container').length < 1;}).wrap('<span class="spare-piece-container"></div>');
     b1Pieces.each(function(index, elem) {
-        var num = tempInstance.game.get().pieces[0][$(elem).attr('data-piece').toLowerCase()] - tempInstance.heldPieces.get()[0][$(elem).attr('data-piece').toLowerCase()];
+        var num = tempInstance.game.get().boards[0].pieces[$(elem).attr('data-piece').toLowerCase()] - tempInstance.heldPieces.get()[0][$(elem).attr('data-piece').toLowerCase()];
         if(num > 1) $('<div class="piece-num">' + num + '</div>').insertBefore(elem);
     });
 
@@ -218,7 +218,7 @@ function hidePieces(tempInstance) {
     b2Pieces.css('visibility','visible');
     b2Pieces.filter(function() {return $(this).parents('.spare-piece-container').length < 1;}).wrap('<span class="spare-piece-container"></div>');
     b2Pieces.each(function(index, elem) {
-        var num = tempInstance.game.get().pieces[1][$(elem).attr('data-piece').toLowerCase()] - tempInstance.heldPieces.get()[1][$(elem).attr('data-piece').toLowerCase()];
+        var num = tempInstance.game.get().boards[1].pieces[$(elem).attr('data-piece').toLowerCase()] - tempInstance.heldPieces.get()[1][$(elem).attr('data-piece').toLowerCase()];
         if(num > 1)  $('<div class="piece-num">' + num + '</div>').insertBefore(elem);
     });
 }
