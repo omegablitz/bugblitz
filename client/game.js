@@ -29,15 +29,6 @@ Template.game.created = function() {
     });
 };
 
-Template.game.helpers({
-    PGN: function() {
-        return JSON.stringify(Template.instance().bpgn.get());
-    },
-    STATUS: function() {
-        return Template.instance().game.get().boards[0].turn() + ", " + Template.instance().game.get().boards[1].turn();
-    }
-});
-
 Template.game.onRendered(function() {
     var removeGreySquares = function() {
         $('#board').find('.square-55d63').css('background', '');
