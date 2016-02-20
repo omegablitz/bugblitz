@@ -183,42 +183,36 @@ Template.game.onDestroyed(function() {
 
 function refresh(tempInstance) {
     $('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b').find('[data-piece=wK], [data-piece=bK]').css('visibility','hidden');
-    var hide1 = "";
-    var show1 = "";
-    for(var piece in tempInstance.game.get().boards[0].pieces) {
-        if(tempInstance.game.get().boards[0].pieces.hasOwnProperty(piece) && tempInstance.game.get().boards[0].pieces[piece] - tempInstance.heldPieces.get()[0][piece] === 0)
-            hide1 += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
-        else
-            show1 += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
-    }
-    var hide2 = "";
-    var show2 = "";
-    for(piece in tempInstance.game.get().boards[1].pieces) {
-        if(tempInstance.game.get().boards[1].pieces.hasOwnProperty(piece) && tempInstance.game.get().boards[1].pieces[piece] - tempInstance.heldPieces.get()[1][piece] === 0)
-            hide2 += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
-        else
-            show2 += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
-    }
-    var board1 = $('#board1');
-    var board2 = $('#board2');
-    board1.find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b').find(hide1.substring(2)).css('visibility','hidden');
-    board2.find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b').find(hide2.substring(2)).css('visibility','hidden');
-
     $('.piece-num').remove();
+    var hideShow1 = buildHideShowStrings(tempInstance.game.get().boards[0].pieces.getPieces(), tempInstance.heldPieces.get()[0]);
+    var hideShow2 = buildHideShowStrings(tempInstance.game.get().boards[1].pieces.getPieces(), tempInstance.heldPieces.get()[1]);
+    var board1Spare = $('#board1').find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
+    var board2Spare = $('#board2').find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
+    board1Spare.find(hideShow1.hide).css('visibility','hidden');
+    board2Spare.find(hideShow2.hide).css('visibility','hidden');
+    var b1Show = board1Spare.find(hideShow1.show);
+    showPieces(b1Show, tempInstance.game.get().boards[0].pieces.getPieces(), tempInstance.heldPieces.get()[0]);
+    var b2Show = board2Spare.find(hideShow2.show);
+    showPieces(b2Show, tempInstance.game.get().boards[1].pieces.getPieces(), tempInstance.heldPieces.get()[1]);
+}
 
-    var b1Pieces = board1.find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b').find(show1.substring(2));
-    b1Pieces.css('visibility','visible');
-    b1Pieces.filter(function() {return $(this).parents('.spare-piece-container').length < 1;}).wrap('<span class="spare-piece-container"></div>');
-    b1Pieces.each(function(index, elem) {
-        var num = tempInstance.game.get().boards[0].pieces[$(elem).attr('data-piece').toLowerCase()] - tempInstance.heldPieces.get()[0][$(elem).attr('data-piece').toLowerCase()];
-        if(num > 1) $('<div class="piece-num">' + num + '</div>').insertBefore(elem);
+function buildHideShowStrings(pieces, heldPieces) {
+    var hide = "";
+    var show = "";
+    _.each(_.keys(pieces), function(piece) {
+        if(pieces[piece] - heldPieces[piece] === 0)
+            hide += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
+        else
+            show += ', [data-piece=' + piece.charAt(0) + piece.charAt(1).toUpperCase() + ']';
     });
+    return {show: show.substring(2), hide: hide.substring(2)};
+}
 
-    var b2Pieces = board2.find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b').find(show2.substring(2));
-    b2Pieces.css('visibility','visible');
-    b2Pieces.filter(function() {return $(this).parents('.spare-piece-container').length < 1;}).wrap('<span class="spare-piece-container"></div>');
-    b2Pieces.each(function(index, elem) {
-        var num = tempInstance.game.get().boards[1].pieces[$(elem).attr('data-piece').toLowerCase()] - tempInstance.heldPieces.get()[1][$(elem).attr('data-piece').toLowerCase()];
-        if(num > 1)  $('<div class="piece-num">' + num + '</div>').insertBefore(elem);
+function showPieces(show, boardPieces, boardHeldPieces) {
+    show.css('visibility','visible');
+    show.filter(function() {return $(this).parents('.spare-piece-container').length < 1;}).wrap('<span class="spare-piece-container"></div>');
+    show.each(function(index, elem) {
+        var num = boardPieces[$(elem).attr('data-piece').toLowerCase()] - boardHeldPieces[$(elem).attr('data-piece').toLowerCase()];
+        if(num > 1) $('<div class="piece-num">' + num + '</div>').insertBefore(elem);
     });
 }
