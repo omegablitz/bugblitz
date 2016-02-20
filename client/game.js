@@ -17,13 +17,17 @@ Template.game.created = function() {
             Template.instance().bpgn.set(newGame);
         }
         var updGame = Template.instance().game.get();
+        var reverse = newGame.slice().reverse();
+        var lastMove1 = _.find(reverse, function(b){return b.boardNum===0});
+        var lastMove2 = _.find(reverse, function(b){return b.boardNum===1});
+        console.log(JSON.stringify(lastMove1) + ", " + JSON.stringify(lastMove2));
         if(Template.instance().board1 != undefined && Template.instance().board2 != undefined) {
             var b1 = Template.instance().board1.get();
             if(updGame.boards[0].fen() !== b1.fen())
-                b1.position(updGame.boards[0].fen());
+                b1.position(updGame.boards[0].fen(), !_.isUndefined(lastMove1) && lastMove1.move.indexOf('=') === -1);
             var b2 = Template.instance().board2.get();
             if(updGame.boards[1].fen() !== b2.fen())
-                b2.position(updGame.boards[1].fen());
+                b2.position(updGame.boards[1].fen(), !_.isUndefined(lastMove2) && lastMove2.move.indexOf('=') === -1);
             refresh(Template.instance());
         }
     });
