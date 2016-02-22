@@ -94,7 +94,7 @@ Template.game.onRendered(function() {
         var temp = Template.instance();
         return function() {
             var bpgn = temp.bpgn.get();
-            for(let move of bpgn.reverse())
+            for(let move of bpgn.slice().reverse())
                 if(move.boardNum === boardNum) {
                     //bpgn = bpgn.pop();
                     //temp.bpgn.set(bpgn);
@@ -157,7 +157,7 @@ refresh = function(tempInstance) {
     showPieces(b1Show, tempInstance.game.get().boards[0].pieces.getPieces(), tempInstance.heldPieces.get()[0]);
     var b2Show = board2Spare.find(hideShow2.show);
     showPieces(b2Show, tempInstance.game.get().boards[1].pieces.getPieces(), tempInstance.heldPieces.get()[1]);
-}
+};
 
 function buildHideShowStrings(pieces, heldPieces) {
     var hide = "";

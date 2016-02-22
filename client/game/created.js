@@ -13,15 +13,11 @@ Template.game.created = function() {
     initTimes(Template.instance());
 
     this.autorun(function() {
-        var bPGN = Template.instance().bpgn.get();
         var newGame = Games.findOne({_id: FlowRouter.getParam("gameId")}).game;
-        if(newGame.toString() !== bPGN.toString()) {
-            var game = Template.instance().game.get();
-            game.load(newGame);
-            Template.instance().game.set(game);
-            Template.instance().bpgn.set(newGame);
-        }
-        var updGame = Template.instance().game.get();
+        var updGame = new BugGame();
+        updGame.load(newGame);
+        Template.instance().game.set(updGame);
+        Template.instance().bpgn.set(newGame);
         var reverse = newGame.slice().reverse();
         var lastMove1 = _.find(reverse, function(b){return b.boardNum===0});
         var lastMove2 = _.find(reverse, function(b){return b.boardNum===1});
