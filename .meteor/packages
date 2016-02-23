@@ -27,3 +27,4 @@ twbs:bootstrap
 service-configuration
 reactive-var
 underscore
+reactive-dict

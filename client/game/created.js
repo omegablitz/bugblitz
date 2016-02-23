@@ -16,6 +16,7 @@ Template.game.created = function() {
         var newGame = Games.findOne({_id: FlowRouter.getParam("gameId")}).game;
         var updGame = new BugGame();
         updGame.load(newGame);
+        setTimes(Template.instance(), newGame);
         Template.instance().game.set(updGame);
         Template.instance().bpgn.set(newGame);
         var reverse = newGame.slice().reverse();
@@ -38,30 +39,110 @@ function initTimes(template) {
     var game = template.game.get();
     var st = template.startTime.get();
     var pgn = template.bpgn.get();
-    template.b1White = new ReactiveVar(tc);
-    template.b1Black = new ReactiveVar(tc);
-    template.b2White = new ReactiveVar(tc);
-    template.b2Black = new ReactiveVar(tc);
+    template.timers = new ReactiveDict();
+    template.timers.set('b1W', tc);
+    template.timers.set('b1B', tc);
+    template.timers.set('b2W', tc);
+    template.timers.set('b2B', tc);
+    template.activeTimers = new ReactiveVar({});
     if(pgn.length > 0) {
         Meteor.call('getServerTime', function(err, sTime) {
-            var lastB1Move = _.find(pgn.slice().reverse(), function(b){return b.boardNum===0});
-            var timeLeftB1 = _.isUndefined(lastB1Move) ? tc - sTime + st : 2 * tc - sTime + st - lastB1Move.time;
-            if(game.boards[0].turn() === 'w') {
-                template.b1Black.set(timeLeftB1);
-                template.b1White.set(lastB1Move.time);
-            } else {
-                template.b1White.set(timeLeftB1);
-                template.b1Black.set(lastB1Move.time);
-            }
-            var lastB2Move = _.find(pgn.slice().reverse(), function(b){return b.boardNum===1});
-            var timeLeftB2 = _.isUndefined(lastB2Move) ? tc - sTime + st : 2 * tc - sTime + st - lastB2Move.time;
-            if(game.boards[1].turn() === 'w') {
-                template.b2Black.set(timeLeftB2);
-                template.b2White.set(lastB2Move.time);
-            } else {
-                template.b2White.set(timeLeftB2);
-                template.b2Black.set(lastB2Move.time);
-            }
+            initBoardTime(template, 1, sTime);
+            initBoardTime(template, 2, sTime);
         });
     }
+}
+
+function initBoardTime(template, boardNum, sTime) {
+    var revPGN = template.bpgn.get().slice().reverse();
+    var bMoves = _.chain(revPGN).filter(function(elem){return elem.boardNum === boardNum - 1}).pluck('time').value();
+    var wTime = bMoves[1 - bMoves.length % 2];
+    var bTime = bMoves[bMoves.length % 2];
+    var toMove = template.game.get().boards[boardNum - 1].turn();
+    var tc = template.timeControl.get();
+    var st = template.startTime.get();
+    var timeLeft = _.isUndefined(bMoves[0]) ? tc - sTime + st : 2 * tc - sTime + st - bMoves[0];
+    if(toMove === 'w') {
+        template.timers.set('b' + boardNum + 'B', _.isUndefined(bTime) ? tc : bTime);
+        template.timers.set('b' + boardNum + 'W', timeLeft);
+        startTimers(template, ['b' + boardNum + 'W'], [])
+    } else {
+        template.timers.set('b' + boardNum + 'W', wTime);
+        template.timers.set('b' + boardNum + 'B', timeLeft);
+        startTimers(template, ['b' + boardNum + 'B'], [])
+    }
+    console.log(template.timers.get('b1W'));
+    console.log(template.timers.get('b1B'));
+    console.log(template.timers.get('b2W'));
+    console.log(template.timers.get('b2B'));
+}
+
+function setTimes(template, moves) {
+    var reversePGN = moves.slice().reverse();
+    if(reversePGN.length <= 0) {
+        console.log("not setting time, revPGN <= 0");
+        return;
+    }
+    var tc = template.timeControl.get();
+    var timers = [];
+    var reset = [];
+    if(reversePGN[0].boardNum === 0 || reversePGN.length === 1) {
+        var lastB1Times = _.chain(reversePGN).filter(function (b) {
+            return b.boardNum === 0
+        }).pluck('time').value();
+        if (lastB1Times.length % 2 == 1) {
+            // First move in arr is white
+            template.timers.set('b1W',_.isUndefined(lastB1Times[0]) ? tc : lastB1Times[0]);
+            template.timers.set('b1B',_.isUndefined(lastB1Times[1]) ? tc : lastB1Times[1]);
+            timers.push('b1B');
+            reset.push('b1W')
+        } else {
+            // First move in arr is black
+            template.timers.set('b1B',_.isUndefined(lastB1Times[0]) ? tc : lastB1Times[0]);
+            template.timers.set('b1W',_.isUndefined(lastB1Times[1]) ? tc : lastB1Times[1]);
+            timers.push('b1W');
+            reset.push('b1B')
+        }
+    }
+    if(reversePGN[0].boardNum === 1 || reversePGN.length === 1) {
+        var lastB2Times = _.chain(reversePGN).filter(function (b) {
+            return b.boardNum === 1
+        }).pluck('time').value();
+        if (lastB2Times.length % 2 == 1) {
+            // First move in arr is white
+            template.timers.set('b2W',_.isUndefined(lastB2Times[0]) ? tc : lastB2Times[0]);
+            template.timers.set('b2B',_.isUndefined(lastB2Times[1]) ? tc : lastB2Times[1]);
+            timers.push('b2B');
+            reset.push('b2W')
+        } else {
+            // First move in arr is black
+            template.timers.set('b2B',_.isUndefined(lastB2Times[0]) ? tc : lastB2Times[0]);
+            template.timers.set('b2W',_.isUndefined(lastB2Times[1]) ? tc : lastB2Times[1]);
+            timers.push('b2W');
+            reset.push('b2B')
+        }
+    }
+    Tracker.nonreactive(function() {
+        startTimers(template, timers, reset)
+    })
+}
+
+function startTimers(template, timerArr, resetArr) {
+    var activeTimers = template.activeTimers.get(); // string arr
+    _.each(timerArr, function(timer) {
+        if(_.has(activeTimers, timer))
+            clearInterval(activeTimers[timer]);
+        activeTimers[timer] = setInterval(function () {
+            template.timers.set(timer, template.timers.get(timer) - 1000);
+        }, 1000)
+    });
+
+    _.each(resetArr, function(timer) {
+        if(_.has(activeTimers, timer)){
+            clearInterval(activeTimers[timer]);
+            delete activeTimers[timer];
+        }
+    });
+
+    template.activeTimers.set(activeTimers);
 }
