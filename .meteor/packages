@@ -27,7 +27,6 @@ service-configuration
 reactive-var
 underscore
 reactive-dict
-accounts-ui
 accounts-password
 email
 useraccounts:core
