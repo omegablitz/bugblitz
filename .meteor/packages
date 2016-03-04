@@ -20,7 +20,6 @@ makalu:chess-js
 kadira:flow-router
 kadira:blaze-layout
 useraccounts:bootstrap
-accounts-password
 accounts-facebook
 accounts-google
 twbs:bootstrap
@@ -28,3 +27,7 @@ service-configuration
 reactive-var
 underscore
 reactive-dict
+accounts-ui
+accounts-password
+email
+useraccounts:core

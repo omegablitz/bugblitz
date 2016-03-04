@@ -1,4 +1,4 @@
-<template name="mainLayout">
+<template name="mmainLayout">
     {{>head}}
     <header><h1>bugblitz</h1></header>
     <main>
@@ -7,9 +7,53 @@
     <!--<footer><a href="http://www.github.com/omegablitz/bugblitz">source</a></footer>-->
 </template>
 
+<template name="mainLayout">
+    {{>head}}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-nav">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Omegablitz</a>
+            <!--<a class="navbar-brand pull-right login" href="#">Login</a>-->
+            <a class="pull-right">
+                <button type="submit" class="btn btn-default">
+                    Sign In
+                </button>
+            </a>
+        </div>
+    </nav>
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="/">Dashboard</a>
+                </li>
+            </ul>
+        </div>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    {{>Template.dynamic template=content}}
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</template>
+
 <template name="head">
     <head>
         <link href="/favicon.ico" rel="icon" type="image/x-icon" />
+        <title>
+            bugblitz
+        </title>
     </head>
 </template>
 
