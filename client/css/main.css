@@ -1,7 +1,7 @@
-/* CSS declarations go here */
-/*.spare-pieces-bottom-ae20f .spare-pieces-top-4028b [data-piece=wK] [data-piece=bK] {*/
-    /*display: none;*/
-/*}*/
+body {
+    background-color: #3B3B3B;
+}
+
 .col {
     float: left;
     padding: 40px;

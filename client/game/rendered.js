@@ -99,6 +99,7 @@ Template.game.onRendered(function() {
                     //bpgn = bpgn.pop();
                     //temp.bpgn.set(bpgn);
                     window.setTimeout(function(){Meteor.call('updateGame', FlowRouter.getParam('gameId'), move)}, 3); // Let autohandler update
+                    // try defer
                     //Meteor.call('updateGame', FlowRouter.getParam('gameId'), move);
                     return;
                 }
