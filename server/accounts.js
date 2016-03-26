@@ -1,6 +1,12 @@
 /**
  * Created by Aashish on 3/2/2016.
  */
+Meteor.methods({
+    "userExists": function(username){
+        return !!Meteor.users.findOne({username: username});
+    }
+});
+
 Accounts.onCreateUser(function(options, user) {
     user.profile = {};
     if(user.services.google) {
