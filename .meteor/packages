@@ -19,7 +19,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 makalu:chess-js
 kadira:flow-router
 kadira:blaze-layout
-useraccounts:bootstrap
 accounts-facebook
 accounts-google
 twbs:bootstrap
@@ -27,8 +26,8 @@ service-configuration
 reactive-var
 underscore
 reactive-dict
-accounts-password
 email
-useraccounts:core
 mquandalle:jade
 mizzao:user-status
+useraccounts:core
+useraccounts:bootstrap

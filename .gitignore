@@ -47,4 +47,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-env.js
+config.js
