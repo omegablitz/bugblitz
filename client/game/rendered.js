@@ -98,9 +98,9 @@ Template.game.onRendered(function() {
                 if(move.boardNum === boardNum) {
                     //bpgn = bpgn.pop();
                     //temp.bpgn.set(bpgn);
-                    window.setTimeout(function(){Meteor.call('updateGame', FlowRouter.getParam('gameId'), move)}, 3); // Let autohandler update
+                    window.setTimeout(function(){Meteor.call('updateGame', Template.currentData().gameId, move)}, 3); // Let autohandler update
                     // try defer
-                    //Meteor.call('updateGame', FlowRouter.getParam('gameId'), move);
+                    //Meteor.call('updateGame', Template.currentData().gameId, move);
                     return;
                 }
         }
@@ -143,6 +143,7 @@ Template.game.onRendered(function() {
 
 Template.game.onDestroyed(function() {
     $(window).off('resize');
+    //Meteor.
 });
 
 refresh = function(tempInstance) {
