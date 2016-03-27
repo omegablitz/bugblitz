@@ -3,7 +3,7 @@
  */
 Template.game.created = function() {
     this.heldPieces = new ReactiveVar([{'wp': 0, 'wr': 0, 'wn': 0, 'wb': 0, 'wq': 0, 'bp': 0, 'br': 0, 'bn': 0, 'bb': 0, 'bq': 0}, {'wp': 0, 'wr': 0, 'wn': 0, 'wb': 0, 'wq': 0, 'bp': 0, 'br': 0, 'bn': 0, 'bb': 0, 'bq': 0}]);
-    var gameObj = Games.findOne({_id: FlowRouter.getParam("gameId")});
+    var gameObj = Games.findOne({_id: Template.currentData().gameId});
     this.bpgn = new ReactiveVar(gameObj.game);
     var game = new BugGame();
     game.load(this.bpgn.get());
@@ -13,7 +13,7 @@ Template.game.created = function() {
     initTimes(Template.instance());
 
     this.autorun(function() {
-        var newGame = Games.findOne({_id: FlowRouter.getParam("gameId")}).game;
+        var newGame = Games.findOne({_id: Template.currentData().gameId}).game;
         var updGame = new BugGame();
         updGame.load(newGame);
         setTimes(Template.instance(), newGame);
