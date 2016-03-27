@@ -5,3 +5,7 @@ Template.game.onCreated(function() {
         self.subscribe('games', gameId);
     });
 });
+
+Tracker.autorun(function () {
+    Meteor.subscribe("onlineUsers");
+});

@@ -10,17 +10,17 @@ Meteor.methods({
 Accounts.onCreateUser(function(options, user) {
     user.profile = {};
     if(user.services.google) {
-        user.profile.email = user.services.google.email;
-        //user.profile.name = user.services.google.name;
+        user.email = user.services.google.email;
+        user.profile.username = user.services.google.name;
         return user;
     }
 
     if(user.services.facebook) {
-        user.profile.email = user.services.facebook.email;
-        //user.profile.name = user.services.facebook.name;
+        user.email = user.services.facebook.email;
+        user.profile.username = user.services.facebook.name;
         return user;
     }
-    user.profile.email = user.emails[0].address;
+    user.email = user.emails[0].address;
 
     Accounts.emailTemplates.from = 'Omegablitz Support <support@omegablitz.com>';
 
