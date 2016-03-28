@@ -127,18 +127,20 @@ Template.game.onRendered(function() {
     refresh(Template.instance());
 
     var instance = Template.instance();
-    var id;
-    $(window).resize(function() {
-        clearTimeout(id);
-        id = setTimeout(doneResizing, 100);
-
-    });
+    $(window).resize(_.throttle(doneResizing, 100));
 
     function doneResizing(){
         board1.resize();
         board2.resize();
         refresh(instance);
     }
+
+    w2ui.layout.on('resize', function(event) {
+        event.onComplete = function() {
+            console.log('object ' + this.name + ' is resized');
+            doneResizing();
+        };
+    });
 });
 
 Template.game.onDestroyed(function() {

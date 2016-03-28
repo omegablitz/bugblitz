@@ -1,6 +1,6 @@
 /* w2ui 1.5.x (nightly) (c) http://w2ui.com, vitmalina@gmail.com */
-var w2ui  = w2ui  || {};
-var w2obj = w2obj || {}; // expose object to be able to overwrite default functions
+w2ui  = {};
+w2obj = {}; // expose object to be able to overwrite default functions
 
 /************************************************
  *  Library: Web 2.0 UI for jQuery

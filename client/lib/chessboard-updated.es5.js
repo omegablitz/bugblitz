@@ -1471,7 +1471,7 @@
                 SQUARE_SIZE = calculateSquareSize();
 
                 // set board width
-                boardEl.css('width', (SQUARE_SIZE * 8) + 'px');
+                boardEl.css('width', (SQUARE_SIZE * 8 + 4) + 'px');
 
                 // set drag piece size
                 draggedPieceEl.css({
