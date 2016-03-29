@@ -35,7 +35,7 @@ Template.dash.onRendered(function() {
         if(size < $(window).width() * 0.15 && size !== 0) {
             $('.w2ui-resizer').css('background-color', '#333333');
         } else {
-            $('.w2ui-resizer').css('background-color', '#c8cad1');
+            $('.w2ui-resizer').css('background-color', '');
         }
     }, 50));
 
@@ -48,16 +48,13 @@ Template.dash.onRendered(function() {
 });
 
 function startLayoutListener() {
-    // TODO drag red if too far right
     w2ui.layout.on('resize', function(event) {
-        $('.w2ui-resizer').css('background-color', 'transparent');
-
+        $('.w2ui-resizer').css('background-color', '');
         var size = w2ui.layout.get('right').size;
         if(size < $(window).width() * 0.15 && size !== 0) {
             w2ui.layout.set('right', {size: 0});
             return;
         }
-
 
         event.onComplete = function() {
             layoutChanged.changed();
