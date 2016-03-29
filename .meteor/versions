@@ -71,6 +71,7 @@ oauth@1.1.7-modules.8
 oauth2@1.1.6-modules.8
 observe-sequence@1.0.8-modules.8
 ordered-dict@1.0.4
+peppelg:bootstrap-3-modal@1.0.4
 promise@0.5.2-modules.8
 random@1.0.6-modules.8
 rate-limit@1.0.1-modules.8
