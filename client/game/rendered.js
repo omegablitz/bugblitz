@@ -3,11 +3,11 @@
  */
 Template.game.onRendered(function() {
     var removeGreySquares = function() {
-        $('#board').find('.square-55d63').css('background', '');
+        Template.instance().$('#board').find('.square-55d63').css('background', '');
     };
 
     var greySquare = function(square) {
-        var squareEl = $('#board').find('.square-' + square);
+        var squareEl = Template.instance().$('#board').find('.square-' + square);
 
         var background = '#a9a9a9';
         if (squareEl.hasClass('black-3c85d') === true) {
@@ -91,14 +91,15 @@ Template.game.onRendered(function() {
         }
     };
     var onSnapEnd = function(boardNum) {
-        var temp = Template.instance();
+        var tempDat = Template.currentData();
+        var tempInstance = Template.instance();
         return function() {
-            var bpgn = temp.bpgn.get();
+            var bpgn = tempInstance.bpgn.get();
             for(let move of bpgn.slice().reverse())
                 if(move.boardNum === boardNum) {
                     //bpgn = bpgn.pop();
                     //temp.bpgn.set(bpgn);
-                    window.setTimeout(function(){Meteor.call('updateGame', Template.currentData().gameId, move)}, 3); // Let autohandler update
+                    window.setTimeout(function(){Meteor.call('updateGame', tempDat.gameId, move)}, 3); // Let autohandler update
                     // try defer
                     //Meteor.call('updateGame', Template.currentData().gameId, move);
                     return;
@@ -124,37 +125,42 @@ Template.game.onRendered(function() {
     var board2 = ChessBoard('board2', cfg(1));
     board2.flip();
     this.board2 = new ReactiveVar(board2);
-    refresh(Template.instance());
 
     var instance = Template.instance();
-    $(window).resize(_.throttle(doneResizing, 100));
+    doneResizing(instance);
+    this.$('.board').css('max-width', (Math.min($(window).width() * 0.35, $(window).height() * 0.6) | 0) + "px");
 
-    function doneResizing(){
-        board1.resize();
-        board2.resize();
-        refresh(instance);
-    }
-
-    w2ui.layout.on('resize', function(event) {
-        event.onComplete = function() {
-            console.log('object ' + this.name + ' is resized');
-            doneResizing();
-        };
+    this.autorun(function() {
+        layoutChanged.depend();
+        doneResizing(Template.instance());
+    });
+    this.autorun(function() {
+        windowChanged.depend();
+        Template.instance().$('.board').css('max-width', (Math.min($(window).width() * 0.35, $(window).height() * 0.6) | 0) + "px");
     });
 });
 
 Template.game.onDestroyed(function() {
-    $(window).off('resize');
+    var gameTemplates = Session.get("renderedGameTemplates");
+    var thisIdx = _(gameTemplates).indexOf(this);
+    gameTemplates.splice(thisIdx, 1);
+    Session.set("renderedGameTemplates", gameTemplates);
     //Meteor.
 });
 
+doneResizing = function(tempInstance) {
+    tempInstance.board1.get().resize();
+    tempInstance.board2.get().resize();
+    refresh(tempInstance);
+};
+
 refresh = function(tempInstance) {
-    $('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b').find('[data-piece=wK], [data-piece=bK]').css('visibility','hidden');
-    $('.piece-num').remove();
+    tempInstance.$('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b').find('[data-piece=wK], [data-piece=bK]').css('visibility','hidden');
+    tempInstance.$('.piece-num').remove();
     var hideShow1 = buildHideShowStrings(tempInstance.game.get().boards[0].pieces.getPieces(), tempInstance.heldPieces.get()[0]);
     var hideShow2 = buildHideShowStrings(tempInstance.game.get().boards[1].pieces.getPieces(), tempInstance.heldPieces.get()[1]);
-    var board1Spare = $('#board1').find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
-    var board2Spare = $('#board2').find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
+    var board1Spare = tempInstance.$('#board1').find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
+    var board2Spare = tempInstance.$('#board2').find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
     board1Spare.find(hideShow1.hide).css('visibility','hidden');
     board2Spare.find(hideShow2.hide).css('visibility','hidden');
     var b1Show = board1Spare.find(hideShow1.show);

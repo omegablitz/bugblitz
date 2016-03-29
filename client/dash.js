@@ -1,3 +1,5 @@
+layoutChanged = new Tracker.Dependency;
+windowChanged = new Tracker.Dependency;
 Template.dash.onRendered(function() {
     var pstyle = 'padding: 5px;';
     $('#layout').w2layout({
@@ -5,16 +7,60 @@ Template.dash.onRendered(function() {
         padding: 5,
         resizer: 5,
         panels: [
-            { type: 'main', size: 200, style: pstyle, content: "<div id='game-pane'></div>" },
-            { type: 'right', resizable: true, style: pstyle, content: "<div id='rightPane'></div>" }
+            { type: 'main', minSize: ($(window).width() * 0.5) | 0,size: 200, style: pstyle, content: "<div id='game-pane'></div>" },
+            { type: 'right', minSize: 0, resizable: true, style: pstyle, content: "<div id='rightPane'></div>" }
         ]
     });
-    Meteor.subscribe('game', '1', {
+
+    $(window).resize(function() {
+        windowChanged.changed();
+    });
+    startLayoutListener();
+    this.autorun(function() {
+        w2ui.layout.off('resize');
+        layoutChanged.depend();
+        var size = w2ui.layout.get('right').size;
+        if(size < $(window).width() * 0.15 && size !== 0) {
+            w2ui.layout.set('right', {size: 0});
+        }
+        startLayoutListener();
+    });
+    this.autorun(function() {
+        windowChanged.depend();
+        w2ui.layout.set('main', {minSize: ($(window).width() * 0.5) | 0});
+    });
+    w2ui.layout.on('resizing', _.throttle(function(event) {
+        var size = w2ui.layout.get('right').size - event.diff_x;
+        console.log(size);
+        if(size < $(window).width() * 0.15 && size !== 0) {
+            $('.w2ui-resizer').css('background-color', '#333333');
+        } else {
+            $('.w2ui-resizer').css('background-color', '#c8cad1');
+        }
+    }, 50));
+
+    Meteor.subscribe('game', 'test', {
         onReady: function() {
-            console.log("subscribed, attempting to add listener to w2");
-            Blaze.renderWithData(Template.game, {gameId: '1'}, $('#game-pane')[0]);
+            Blaze.renderWithData(Template.game, {gameId: 'test'}, $('#game-pane')[0]);
             // TODO need to unsubscribe
         }
     });
-
 });
+
+function startLayoutListener() {
+    // TODO drag red if too far right
+    w2ui.layout.on('resize', function(event) {
+        $('.w2ui-resizer').css('background-color', 'transparent');
+
+        var size = w2ui.layout.get('right').size;
+        if(size < $(window).width() * 0.15 && size !== 0) {
+            w2ui.layout.set('right', {size: 0});
+            return;
+        }
+
+
+        event.onComplete = function() {
+            layoutChanged.changed();
+        };
+    });
+}

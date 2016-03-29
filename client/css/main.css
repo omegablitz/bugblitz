@@ -33,6 +33,7 @@ body {
 .board {
     width: 100%;
     align-self: center;
+    /*max-width: 35vw;*/
 }
 
 #board1 {
@@ -60,6 +61,10 @@ body {
     font-weight: bold;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     cursor: default;
+}
+
+.piece-417db {
+    z-index: 200;
 }
 
 .spare-piece-container {
