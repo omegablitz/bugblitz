@@ -31,7 +31,6 @@ Template.dash.onRendered(function() {
     });
     w2ui.layout.on('resizing', _.throttle(function(event) {
         var size = w2ui.layout.get('right').size - event.diff_x;
-        console.log(size);
         if(size < $(window).width() * 0.15 && size !== 0) {
             $('.w2ui-resizer').css('background-color', '#333333');
         } else {

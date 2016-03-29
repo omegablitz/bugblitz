@@ -71,16 +71,11 @@ function initBoardTime(template, boardNum, sTime) {
         template.timers.set('b' + boardNum + 'B', timeLeft);
         startTimers(template, ['b' + boardNum + 'B'], [])
     }
-    console.log(template.timers.get('b1W'));
-    console.log(template.timers.get('b1B'));
-    console.log(template.timers.get('b2W'));
-    console.log(template.timers.get('b2B'));
 }
 
 function setTimes(template, moves) {
     var reversePGN = moves.slice().reverse();
     if(reversePGN.length <= 0) {
-        console.log("not setting time, revPGN <= 0");
         return;
     }
     var tc = template.timeControl.get();
