@@ -29,7 +29,5 @@ reactive-dict
 email
 mquandalle:jade
 mizzao:user-status
-useraccounts:core
-useraccounts:bootstrap
 fortawesome:fontawesome
 peppelg:bootstrap-3-modal

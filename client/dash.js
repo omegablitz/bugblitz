@@ -1,5 +1,14 @@
 layoutChanged = new Tracker.Dependency;
 windowChanged = new Tracker.Dependency;
+
+Session.setDefault("pageTitle", "bugblitz");
+
+Template.dash.onCreated(function() {
+    Tracker.autorun(function(){
+        document.title = Session.get("pageTitle");
+    });
+});
+
 Template.dash.onRendered(function() {
     var pstyle = 'padding: 5px;';
     $('#layout').w2layout({
