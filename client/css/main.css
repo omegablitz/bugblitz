@@ -2,6 +2,10 @@ body {
     background-color: #FAFAFA;
 }
 
+#board2 .spare-pieces-7492f > img[data-piece='wK'] {
+    display: none;
+}
+
 .w2ui-panel-content {
     background-color: rgba(170, 170, 170, 0.2) !important;
 }
@@ -51,8 +55,8 @@ body {
     color: black;
     font-size: 14px;
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-    right: 1px;
-    bottom: -20px;
+    right: 2px;
+    bottom: -95%;
     font-weight: bold;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     cursor: default;
