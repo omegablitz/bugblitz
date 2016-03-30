@@ -64,8 +64,6 @@ function startLayoutListener() {
             return;
         }
 
-        event.onComplete = function() {
-            layoutChanged.changed();
-        };
+        layoutChanged.changed();
     });
 }
