@@ -1,37 +1,11 @@
 img.ri#mainSplash(src= "/splash.png")
-div#page-wrapper(style="position: absolute; width: 100%; height: 100%; display: flex; flex-flow: column")
+#page-wrapper(style="position: absolute; width: 100%; height: 100%; display: flex; flex-flow: column")
     nav.navbar.navbar-default.navbar-static-top(role='navigation')
         .navbar-header
             a.navbar-brand(href='#') Omegablitz
             // <a class="navbar-brand pull-right login" href="#">Login</a>
-            ul.nav.navbar-nav.navbar-right(style='padding-right: 15px')
-                li.dropdown
-                    a.dropdown-toggle(href='#', data-toggle='dropdown')
-                        span.glyphicon.glyphicon-user
-                        strong Sign In
-                        span.glyphicon.glyphicon-chevron-down
-                    ul.dropdown-menu
-                        li
-                            +loginButtons
+            .collapse.navbar-collapse
+                ul.nav.navbar-nav.navbar-right(style='padding-right: 15px')
+                    +accountDropdown
 
-                        //li
-                        //    .navbar-login
-                        //        .row
-                        //            .col-lg-4
-                        //                p.text-center
-                        //                    span.glyphicon.glyphicon-user.icon-size
-                        //            .col-lg-8
-                        //                p.text-left
-                        //                    strong Nombre Apellido
-                        //                p.text-left.small correoElectronico@email.com
-                        //                p.text-left
-                        //                    a.btn.btn-primary.btn-block.btn-sm(href='#') Actualizar Datos
-                        //li.divider
-                        //li
-                        //    .navbar-login.navbar-login-session
-                        //        .row
-                        //            .col-lg-12
-                        //                p
-                        //                    a.btn.btn-danger.btn-block(href='#') Cerrar Sesion
-
-    div#layout(style="position: relative; flex: 1;")
+    #layout(style="position: relative; flex: 1;")
