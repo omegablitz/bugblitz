@@ -159,14 +159,55 @@ refresh = function(tempInstance) {
     tempInstance.$('.piece-num').remove();
     var hideShow1 = buildHideShowStrings(tempInstance.game.get().boards[0].pieces.getPieces(), tempInstance.heldPieces.get()[0]);
     var hideShow2 = buildHideShowStrings(tempInstance.game.get().boards[1].pieces.getPieces(), tempInstance.heldPieces.get()[1]);
-    var board1Spare = tempInstance.$('#board1').find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
-    var board2Spare = tempInstance.$('#board2').find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
+    var board1 = tempInstance.$('#board1');
+    var board2 = tempInstance.$('#board2');
+    var board1Spare = board1.find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
+    var board2Spare = board2.find('.spare-pieces-bottom-ae20f, .spare-pieces-top-4028b');
     board1Spare.find(hideShow1.hide).css('visibility','hidden');
     board2Spare.find(hideShow2.hide).css('visibility','hidden');
     var b1Show = board1Spare.find(hideShow1.show);
     showPieces(b1Show, tempInstance.game.get().boards[0].pieces.getPieces(), tempInstance.heldPieces.get()[0]);
     var b2Show = board2Spare.find(hideShow2.show);
     showPieces(b2Show, tempInstance.game.get().boards[1].pieces.getPieces(), tempInstance.heldPieces.get()[1]);
+
+    var width = tempInstance.$('.piece-417db').width() * 2 + 2;
+    var height = board1Spare.height();
+
+    tempInstance.$('.clock').remove();
+
+    board1.find('.spare-pieces-top-4028b').prepend("<div class='clock1top clock1 clock' style='position: absolute;'></div>");
+    board1.find('.spare-pieces-bottom-ae20f').prepend("<div class='clock1bottom clock1 clock' style='position: absolute;'></div>");
+    tempInstance.$('.clock1').css('margin-left', '-' + board1.find('.spare-pieces-top-4028b').css('padding-left'));
+
+    board2.find('.spare-pieces-top-4028b').prepend("<div class='clock2top clock2 clock' style='position: absolute;'></div>");
+    board2.find('.spare-pieces-bottom-ae20f').prepend("<div class='clock2bottom clock2 clock' style='position: absolute;'></div>");
+    tempInstance.$('.clock2').css('margin-left', tempInstance.$('.piece-417db').width() * 5);
+
+    tempInstance.$('.clock').css('width', width + "px");
+    tempInstance.$('.clock').css('height', height + "px");
+    tempInstance.$('.clock').css('font-size', Math.floor(height*0.6) + "px");
+    tempInstance.$('.clock').css('background-color', 'rgba(0, 0, 0, 0.65');
+    tempInstance.$('.clock').css('text-align', "center");
+    tempInstance.$('.clock').css('vertical-align', "middle");
+    tempInstance.$('.clock').css('line-height', height + "px");
+    tempInstance.$('.clock').css('font-family', '"Lucida Console", Monaco, monospace');
+    tempInstance.$('.clock').css('color', '#FAFAFA');
+
+    Blaze.render(Blaze.View(function() {
+        return numbro(Math.ceil(Template.instance().timers.get('b1W')/1000.0)).format('00:00').split(/:(.+)?/)[1];
+    }), tempInstance.$('.clock1bottom')[0]);
+
+    Blaze.render(Blaze.View(function() {
+        return numbro(Math.ceil(Template.instance().timers.get('b1B')/1000.0)).format('00:00').split(/:(.+)?/)[1];
+    }), tempInstance.$('.clock1top')[0]);
+
+    Blaze.render(Blaze.View(function() {
+        return numbro(Math.ceil(Template.instance().timers.get('b2B')/1000.0)).format('00:00').split(/:(.+)?/)[1];
+    }), tempInstance.$('.clock2bottom')[0]);
+
+    Blaze.render(Blaze.View(function() {
+        return numbro(Math.ceil(Template.instance().timers.get('b2W')/1000.0)).format('00:00').split(/:(.+)?/)[1];
+    }), tempInstance.$('.clock2top')[0]);
 };
 
 function buildHideShowStrings(pieces, heldPieces) {
