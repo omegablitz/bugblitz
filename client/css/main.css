@@ -2,7 +2,7 @@ body {
     background-color: #FAFAFA;
 }
 
-#board2 .spare-pieces-7492f > img[data-piece='wK'] {
+#board2 .spare-pieces-7492f > img[data-piece='wK'], #board2 .spare-pieces-7492f > img[data-piece='bK'] {
     display: none;
 }
 
