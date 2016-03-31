@@ -16,6 +16,7 @@ caching-compiler@1.0.1-modules.8
 caching-html-compiler@1.0.3-modules.8
 callback-hook@1.0.5-modules.8
 check@1.1.1-modules.8
+chuangbo:cookie@1.1.0
 coffeescript@1.0.12-modules.8
 cosmos:browserify@0.5.1
 ddp@1.2.2
@@ -52,6 +53,10 @@ meteor@1.1.11-modules.8
 meteor-base@1.0.1
 meteor-env-dev@0.0.1-modules.8
 meteor-env-prod@0.0.1-modules.8
+meteorhacks:fast-render@2.13.0
+meteorhacks:inject-data@2.0.0
+meteorhacks:meteorx@1.4.1
+meteorhacks:picker@1.0.3
 minifiers@1.1.7
 minifiers-css@1.1.8-modules.8
 minifiers-js@1.1.8-modules.8
