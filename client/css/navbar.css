@@ -4,5 +4,5 @@
 
 .navbar-header {
     /*margin-right:5px;*/
-    width:98%;
+    width: calc(100% - 15px);
 }
