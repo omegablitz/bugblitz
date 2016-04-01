@@ -194,19 +194,19 @@ refresh = function(tempInstance) {
     tempInstance.$('.clock').css('color', '#FAFAFA');
 
     Blaze.render(Blaze.View(function() {
-        return numbro(Math.ceil(Template.instance().timers.get('b1W')/1000.0)).format('00:00').split(/:(.+)?/)[1];
+        return numbro(Math.ceil(tempInstance.timers.get('b1W')/1000.0)).format('00:00').split(/:(.+)?/)[1];
     }), tempInstance.$('.clock1bottom')[0]);
 
     Blaze.render(Blaze.View(function() {
-        return numbro(Math.ceil(Template.instance().timers.get('b1B')/1000.0)).format('00:00').split(/:(.+)?/)[1];
+        return numbro(Math.ceil(tempInstance.timers.get('b1B')/1000.0)).format('00:00').split(/:(.+)?/)[1];
     }), tempInstance.$('.clock1top')[0]);
 
     Blaze.render(Blaze.View(function() {
-        return numbro(Math.ceil(Template.instance().timers.get('b2B')/1000.0)).format('00:00').split(/:(.+)?/)[1];
+        return numbro(Math.ceil(tempInstance.timers.get('b2B')/1000.0)).format('00:00').split(/:(.+)?/)[1];
     }), tempInstance.$('.clock2bottom')[0]);
 
     Blaze.render(Blaze.View(function() {
-        return numbro(Math.ceil(Template.instance().timers.get('b2W')/1000.0)).format('00:00').split(/:(.+)?/)[1];
+        return numbro(Math.ceil(tempInstance.timers.get('b2W')/1000.0)).format('00:00').split(/:(.+)?/)[1];
     }), tempInstance.$('.clock2top')[0]);
 };
 
