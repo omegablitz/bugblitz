@@ -47,12 +47,12 @@ Template.dash.onRendered(function() {
         }
     }, 50));
 
-    Meteor.subscribe('game', 'test', {
-        onReady: function() {
-            Blaze.renderWithData(Template.game, {gameId: 'test'}, $('#game-pane')[0]);
-            // TODO need to unsubscribe
-        }
-    });
+    // Meteor.subscribe('game', 'test', {
+    //     onReady: function() {
+    //         Blaze.renderWithData(Template.game, {gameId: 'test'}, $('#game-pane')[0]);
+    //         // TODO need to unsubscribe
+    //     }
+    // });
 });
 
 function startLayoutListener() {

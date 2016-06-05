@@ -4,7 +4,12 @@
 Template.loginButtons.onCreated(function() {
     this.googleStatus = new ReactiveVar("idle");
     this.facebookStatus = new ReactiveVar("idle");
+    this.isRendered = new ReactiveVar(false);
 });
+
+Template.loginButtons.rendered = function() {
+    this.isRendered.set(true);
+};
 
 Template.loginButtons.helpers({
     googleStatus: function() {
@@ -19,6 +24,8 @@ Template.loginButtons.helpers({
     },
 
     facebookStatus: function() {
+        if(!Template.instance().isRendered.get())
+            return;
         var fbButton = Template.instance().$('#facebookButton');
         switch(Template.instance().facebookStatus.get()) {
             case "idle":
