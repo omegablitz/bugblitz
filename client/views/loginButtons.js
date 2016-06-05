@@ -19,7 +19,7 @@ Template.loginButtons.helpers({
     },
 
     facebookStatus: function() {
-        var fbButton = $('#facebookButton');
+        var fbButton = Template.instance().$('#facebookButton');
         switch(Template.instance().facebookStatus.get()) {
             case "idle":
                 fbButton.css('border', '3px solid rgba(133, 153, 199, 0)');
