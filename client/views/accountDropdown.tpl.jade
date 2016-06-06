@@ -10,20 +10,20 @@ li.dropdown
         if loggedOn
             li
                 .navbar-login
-                    .row
+                    .row(style='margin-left:0; margin-right: 0;')
                         .col-lg-4
                             p.text-center
                                 span.glyphicon.glyphicon-user.icon-size
                         .col-lg-8
                             p.text-left
-                                strong Nombre Apellido
-                            p.text-left.small correoElectronico@email.com
+                                strong #{status}
+                            p.text-left.small Placeholder
                             p.text-left
-                                a.btn.btn-primary.btn-block.btn-sm(href='#') Actualizar Datos
+                                a.btn.btn-primary.btn-block.btn-sm(href='#') My Account
             li.divider
             li
                 .navbar-login.navbar-login-session
-                    .row
+                    .row(style='margin-left:0; margin-right: 0;')
                         .col-lg-12
                             p
                                 a#signout.btn.btn-danger.btn-block Sign Out
