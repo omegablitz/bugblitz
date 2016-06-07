@@ -49,6 +49,7 @@ livedata@1.0.18
 localstorage@1.0.9
 logging@1.0.12
 makalu:chess-js@0.0.1
+materialize:materialize@0.97.5
 meteor@1.1.14
 meteor-base@1.0.4
 meteorhacks:fast-render@2.14.0

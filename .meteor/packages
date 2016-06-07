@@ -33,3 +33,4 @@ peppelg:bootstrap-3-modal
 meteorhacks:fast-render
 standard-minifier-css
 standard-minifier-js
+materialize:materialize
