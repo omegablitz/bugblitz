@@ -10,6 +10,8 @@ Template.dash.onCreated(function() {
 });
 
 Template.dash.onRendered(function() {
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
     var pstyle = 'padding: 5px;';
     $('#layout').w2layout({
         name: 'layout',

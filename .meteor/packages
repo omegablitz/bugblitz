@@ -20,7 +20,6 @@ kadira:flow-router
 kadira:blaze-layout
 accounts-facebook
 accounts-google
-twbs:bootstrap
 service-configuration
 reactive-var
 underscore
@@ -34,3 +33,5 @@ meteorhacks:fast-render
 standard-minifier-css
 standard-minifier-js
 materialize:materialize
+useraccounts:materialize
+accounts-password

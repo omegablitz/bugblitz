@@ -15,11 +15,11 @@ Template.loginButtons.helpers({
     googleStatus: function() {
         switch(Template.instance().googleStatus.get()) {
             case "idle":
-                return "/assets/google/web/1x/btn_google_signin_dark_normal_web.png";
+                return "/assets/google/web/2x/btn_google_signin_dark_normal_web@2x.png";
             case "hover":
-                return "/assets/google/web/1x/btn_google_signin_dark_focus_web.png";
+                return "/assets/google/web/2x/btn_google_signin_dark_focus_web@2x.png";
             case "clicked":
-                return "/assets/google/web/1x/btn_google_signin_dark_pressed_web.png";
+                return "/assets/google/web/2x/btn_google_signin_dark_pressed_web@2x.png";
         }
     },
 
@@ -36,7 +36,7 @@ Template.loginButtons.helpers({
                 break;
         }
 
-        return "/assets/facebook/sign-in-resized-unbordered.png";
+        return "/assets/facebook/sign-in.png";
     }
 });
 

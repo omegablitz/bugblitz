@@ -1,15 +1,21 @@
 link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
 img.ri#mainSplash(src= "/splash.png")
 #page-wrapper(style="position: absolute; width: 100%; height: 100%; display: flex; flex-flow: column")
-    nav.navbar.navbar-default.navbar-static-top(role='navigation')
-        .navbar-header
-            a.navbar-brand(href='#') Omegablitz
-            // <a class="navbar-brand pull-right login" href="#">Login</a>
-            .collapse.navbar-collapse
-                ul.nav.navbar-nav.navbar-right
-                    +accountDropdown
+    nav
+        .nav-wrapper
+            a.brand-logo(href='#') Omegablitz
+            ul#nav-mobile.right.hide-on-med-and-down
+                li
+                    a.modal-trigger(href='#modalLogin') Login
 
     #layout(style="position: relative; flex: 1;")
     .fixed-action-btn(style='bottom: 45px; right: 24px;')
         a.btn-floating.btn-large.red
             i.large.material-icons add
+#modalLogin.modal
+    .modal-content
+        +atForm
+    //    h4 Log in to Your Account
+    //    p A bunch of text
+    //.modal-footer
+    //    a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href='#!') Agree
